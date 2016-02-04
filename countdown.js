@@ -4,12 +4,14 @@ function getTimeRemaining(endtime) {
   var minutes = Math.floor((t / 1000 / 60) % 60);
   var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
   var days = Math.floor(t / (1000 * 60 * 60 * 24));
+  var daysleft = Math.floor(days * (5 / 7)) - 10;
   return {
     'total': t,
     'days': days,
     'hours': hours,
     'minutes': minutes,
-    'seconds': seconds
+    'seconds': seconds,
+    'daysleft': daysleft
   };
 }
 
@@ -19,6 +21,7 @@ function initializeClock(id, endtime) {
   var hoursSpan = clock.querySelector('.hours');
   var minutesSpan = clock.querySelector('.minutes');
   var secondsSpan = clock.querySelector('.seconds');
+  var leftsSpan = clock.querySelector('.left');
 
   function updateClock() {
     var t = getTimeRemaining(endtime);
@@ -27,6 +30,7 @@ function initializeClock(id, endtime) {
     hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
     minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
     secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+    leftsSpan.innerHTML = t.daysleft;
 
     if (t.total <= 0) {
       clearInterval(timeinterval);
